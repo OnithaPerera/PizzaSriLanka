@@ -6,7 +6,10 @@ import java.util.Map;
 import java.util.Scanner;
 
 // ===================== ENUMS =====================
-
+/**
+ * Using Enums ensures type-safety and prevents errors from misspelled
+ * strings.This is a core requirement of the project brief.
+ */
 enum PizzaType {
     VEG, NON_VEG
 }
@@ -28,7 +31,10 @@ enum OrderStatus {
 }
 
 // ===================== INTERFACE =====================
-
+/**
+ * Abstraction: The Sellable interface defines a contract for all menu items.
+ * Every item must provide these details to be part of the ordering system.
+ */
 interface Sellable {
     String getId();
 
@@ -38,8 +44,12 @@ interface Sellable {
 }
 
 // ===================== ABSTRACT PARENT CLASS =====================
-
+/**
+ * Inheritance: MenuItem acts as the base class for all products.Abstract
+ * classes cannot be instantiated, preventing "generic" items on the menu.
+ */
 abstract class MenuItem implements Sellable {
+    // Encapsulation: Fields are private to protect data integrity.
     private String id;
     private String name;
     private double price;
@@ -65,6 +75,9 @@ abstract class MenuItem implements Sellable {
         return price;
     }
 
+    /**
+     * Defensive Programming: Validating input before setting the price.
+     */
     public void setPrice(double price) {
         if (price >= 0) {
             this.price = price;
@@ -73,12 +86,13 @@ abstract class MenuItem implements Sellable {
         }
     }
 
+    // Method Overriding: Defined here but implementation is left to child classes.
     @Override
     public abstract String toString();
 }
 
 // ===================== CHILD CLASSES =====================
-
+/** Polymorphism: These classes extend MenuItem and provide specific details. */
 class Pizza extends MenuItem {
     private PizzaType type;
     private PizzaSize size;
@@ -144,7 +158,7 @@ class Drink extends MenuItem {
 }
 
 // ===================== ORDER ITEM =====================
-
+/** Composition: OrderItem wraps a MenuItem to associate it with a quantity. */
 class OrderItem {
     private MenuItem item;
     private int quantity;
@@ -180,7 +194,6 @@ class OrderItem {
 }
 
 // ===================== ORDER =====================
-
 class Order {
     private static int orderCounter = 1001;
 
@@ -207,10 +220,12 @@ class Order {
         return status;
     }
 
+    // Method Overloading: Add item with quantity 1 by default.
     public void addItem(MenuItem item) {
         addItem(item, 1);
     }
 
+    // Method Overloading: Add item with a specific quantity.
     public void addItem(MenuItem item, int quantity) {
         if (item != null && quantity > 0) {
             items.add(new OrderItem(item, quantity));
@@ -237,14 +252,15 @@ class Order {
 
     public double calculateSubtotal() {
         double subtotal = 0;
-
         for (OrderItem item : items) {
             subtotal += item.getSubtotal();
         }
-
         return subtotal;
     }
 
+    /**
+     * Business Logic: Optional discount feature based on subtotal.
+     */
     public double calculateDiscount() {
         double subtotal = calculateSubtotal();
 
@@ -283,7 +299,9 @@ class Order {
 }
 
 // ===================== MENU =====================
-
+/**
+ * Collections Usage: Using both a List (for display) and a Map (for lookup).
+ */
 class Menu {
     private List<MenuItem> itemList;
     private Map<String, MenuItem> itemMap;
@@ -331,6 +349,9 @@ class Menu {
         System.out.println("==================================================================");
     }
 
+    /**
+     * Searching: Implements case-insensitive partial-name search.
+     */
     public void search(String query) {
         boolean found = false;
 
@@ -349,6 +370,9 @@ class Menu {
         }
     }
 
+    /**
+     * Sorting: Using Comparators to sort by price or name.
+     */
     public void sortByPriceAscending() {
         itemList.sort(Comparator.comparingDouble(MenuItem::getPrice));
     }
@@ -363,8 +387,7 @@ class Menu {
 }
 
 // ===================== MAIN APPLICATION =====================
-
-public class PizzaSriLanka {
+public class PizzaShopApp {
     private static Menu menu = new Menu();
     private static List<Order> allOrders = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
@@ -384,36 +407,28 @@ public class PizzaSriLanka {
                 case 1:
                     addMenuItemUI();
                     break;
-
                 case 2:
                     removeMenuItemUI();
                     break;
-
                 case 3:
                     menu.displayMenu();
                     break;
-
                 case 4:
                     searchSortUI();
                     break;
-
                 case 5:
                     placeOrderUI();
                     break;
-
                 case 6:
                     viewAllOrders();
                     break;
-
                 case 7:
                     updateOrderStatusUI();
                     break;
-
                 case 8:
                     System.out.println("Thank you for using Pizza Sri Lanka System.");
                     running = false;
                     break;
-
                 default:
                     System.out.println("Invalid choice. Please select 1 to 8.");
             }
@@ -737,6 +752,10 @@ public class PizzaSriLanka {
         }
     }
 
+    /**
+     * Input Validation: These methods use try-catch blocks to prevent
+     * the program from crashing if the user enters non-numeric data.
+     */
     private static int readInt(String message) {
         while (true) {
             try {
