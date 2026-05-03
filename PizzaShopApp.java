@@ -411,19 +411,19 @@ public class PizzaShopApp {
                     removeMenuItemUI();
                     break;
                 case 3:
-                    menu.displayMenu();
+                    updateOrderStatusUI();
                     break;
                 case 4:
-                    searchSortUI();
+                    menu.displayMenu();
                     break;
                 case 5:
-                    placeOrderUI();
+                    searchSortUI();
                     break;
                 case 6:
-                    viewAllOrders();
+                    placeOrderUI();
                     break;
                 case 7:
-                    updateOrderStatusUI();
+                    viewAllOrders();
                     break;
                 case 8:
                     System.out.println("Thank you for using Pizza Sri Lanka System.");
@@ -439,11 +439,11 @@ public class PizzaShopApp {
         System.out.println("\n================ PIZZA SRI LANKA SYSTEM ================");
         System.out.println("1. Manager: Add Menu Item");
         System.out.println("2. Manager: Remove Menu Item");
-        System.out.println("3. View Menu");
-        System.out.println("4. Search / Sort Menu");
-        System.out.println("5. Place Order");
-        System.out.println("6. View All Orders");
-        System.out.println("7. Manager: Update Order Status");
+        System.out.println("3. Manager: Update Order Status");
+        System.out.println("4. View Menu");
+        System.out.println("5. Search / Sort Menu");
+        System.out.println("6. Place Order");
+        System.out.println("7. View All Orders");
         System.out.println("8. Exit");
         System.out.println("========================================================");
     }
