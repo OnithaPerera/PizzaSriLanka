@@ -457,13 +457,25 @@ public class PizzaSriLanka {
             int sChoice = readInt("Select status (1-4): ");
 
             switch (sChoice) {
-                case 1 -> targetOrder.setStatus(OrderStatus.PLACED);
-                case 2 -> targetOrder.setStatus(OrderStatus.PREPARING);
-                case 3 -> targetOrder.setStatus(OrderStatus.READY);
-                case 4 -> targetOrder.setStatus(OrderStatus.COMPLETED);
-                default -> System.out.println("Invalid selection. Status not changed.");
+                case 1:
+                    targetOrder.setStatus(OrderStatus.PLACED);
+                    System.out.println("Status updated successfully.");
+                    break;
+                case 2:
+                    targetOrder.setStatus(OrderStatus.PREPARING);
+                    System.out.println("Status updated successfully.");
+                    break;
+                case 3:
+                    targetOrder.setStatus(OrderStatus.READY);
+                    System.out.println("Status updated successfully.");
+                    break;
+                case 4:
+                    targetOrder.setStatus(OrderStatus.COMPLETED);
+                    System.out.println("Status updated successfully.");
+                    break;
+                default:
+                    System.out.println("Invalid selection. Status not changed.");
             }
-            System.out.println("Status updated successfully.");
         } else {
             System.out.println("Error: Order ID not found.");
         }
