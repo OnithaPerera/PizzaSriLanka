@@ -199,12 +199,18 @@ class Order {
         this.status = OrderStatus.NEW;
     }
 
-    // Method overloading: add one quantity by default
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
     public void addItem(MenuItem item) {
         addItem(item, 1);
     }
 
-    // Method overloading: add selected quantity
     public void addItem(MenuItem item, int quantity) {
         if (item != null && quantity > 0) {
             items.add(new OrderItem(item, quantity));
@@ -400,12 +406,16 @@ public class PizzaSriLanka {
                     break;
 
                 case 7:
+                    updateOrderStatusUI();
+                    break;
+
+                case 8:
                     System.out.println("Thank you for using Pizza Sri Lanka System.");
                     running = false;
                     break;
 
                 default:
-                    System.out.println("Invalid choice. Please select 1 to 7.");
+                    System.out.println("Invalid choice. Please select 1 to 8.");
             }
         }
     }
@@ -418,8 +428,45 @@ public class PizzaSriLanka {
         System.out.println("4. Search / Sort Menu");
         System.out.println("5. Place Order");
         System.out.println("6. View All Orders");
-        System.out.println("7. Exit");
+        System.out.println("7. Manager: Update Order Status");
+        System.out.println("8. Exit");
         System.out.println("========================================================");
+    }
+
+    private static void updateOrderStatusUI() {
+        if (allOrders.isEmpty()) {
+            System.out.println("No orders available to update.");
+            return;
+        }
+
+        System.out.print("Enter Order ID to update (e.g., ORD1001): ");
+        String searchId = scanner.nextLine();
+
+        Order targetOrder = null;
+        for (Order o : allOrders) {
+            if (o.getOrderId().equalsIgnoreCase(searchId)) {
+                targetOrder = o;
+                break;
+            }
+        }
+
+        if (targetOrder != null) {
+            System.out.println("Current status: " + targetOrder.getStatus());
+            System.out.println("Select new status: ");
+            System.out.println("1. PLACED | 2. PREPARING | 3. READY | 4. COMPLETED");
+            int sChoice = readInt("Select status (1-4): ");
+
+            switch (sChoice) {
+                case 1 -> targetOrder.setStatus(OrderStatus.PLACED);
+                case 2 -> targetOrder.setStatus(OrderStatus.PREPARING);
+                case 3 -> targetOrder.setStatus(OrderStatus.READY);
+                case 4 -> targetOrder.setStatus(OrderStatus.COMPLETED);
+                default -> System.out.println("Invalid selection. Status not changed.");
+            }
+            System.out.println("Status updated successfully.");
+        } else {
+            System.out.println("Error: Order ID not found.");
+        }
     }
 
     private static String generateItemId() {
